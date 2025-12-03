@@ -37,5 +37,5 @@ public class Maquina {
 	public void setUsuarios(Set<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
-	
+	//test
 }
