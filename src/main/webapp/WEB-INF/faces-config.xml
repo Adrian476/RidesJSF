@@ -51,6 +51,24 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 	</navigation-case>
 </navigation-rule>
 
+<navigation-rule>
+	<display-name>Driver.xhtml</display-name>
+	<from-view-id>/Driver.xhtml</from-view-id>
+	<navigation-case>
+		<from-outcome>login</from-outcome>
+		<to-view-id>/Login.xhtml</to-view-id>
+	</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+	<display-name>Driver.xhtml</display-name>
+	<from-view-id>/Driver.xhtml</from-view-id>
+	<navigation-case>
+		<from-outcome>hola</from-outcome>
+		<to-view-id>/Hola.xhtml</to-view-id>
+	</navigation-case>
+</navigation-rule>
+
 <converter>
  <description>TipoUsuarioConverter, definido en facesconfig.xml</description>
  <converter-id>TipoUsuarioConverter</converter-id>
