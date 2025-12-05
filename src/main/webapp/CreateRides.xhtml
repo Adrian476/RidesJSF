@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://java.sun.com/jsf/facelets"
+ xmlns:h="http://xmlns.jcp.org/jsf/html"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+<h:head><title>Create Rides</title></h:head>
+<h:body>
+<h:form>
+<table>
+	<tr>
+		<td>Depart City</td>
+		<td><h:inputText></h:inputText></td>
+		<!-- LOGIC BEAN REACTION -->
+	</tr>
+	<tr>
+		<td>Arrival City</td>
+		<td><h:inputText></h:inputText></td>
+		<!-- LOGIC BEAN REACTION -->
+	</tr>
+	<tr>
+		<td>Number of Seats</td>
+		<td>
+			<h:inputText>
+				<!-- f:validateRegex pattern="^([0-9])$"/-->
+			</h:inputText>
+			<!-- LOGIC BEAN REACTION -->
+		</td>
+	</tr>
+	<tr>
+		<td>Price</td>
+		<td>
+			<h:inputText>
+				<!-- f:validateRegex pattern="^([0-9])$"/-->
+			</h:inputText>
+			<!-- LOGIC BEAN REACTION -->
+		</td>
+	</tr>
+	<tr>
+		<td>Ride Date</td>
+		<td>
+			<p:calendar>
+			<!-- p:ajax -->
+			</p:calendar>
+		</td>
+		<!-- LOGIC BEAN REACTION -->
+	</tr>
+</table>
+<h:messages id="mensajes" style="color:blue"/>
+<tr>
+	<p>
+	<h:commandButton value="Create Ride" /><!-- ACTION -->
+	<h:commandButton value="Close" action="close" immediate="true"/>
+	</p>
+</tr>
+
+</h:form>
+</h:body>
+</html>
