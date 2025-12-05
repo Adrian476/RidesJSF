@@ -38,13 +38,22 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 	<from-view-id>/Driver.xhtml</from-view-id>
 	<navigation-case>
 		<from-outcome>ver_viajes</from-outcome>
-		<to-view-id>/Login.xhtml</to-view-id>
+		<to-view-id>/QueryRides.xhtml</to-view-id>
 	</navigation-case>
 </navigation-rule>
 
 <navigation-rule>
 	<display-name>CreateRides.xhtml</display-name>
 	<from-view-id>/CreateRides.xhtml</from-view-id>
+	<navigation-case>
+		<from-outcome>close</from-outcome>
+		<to-view-id>/Driver.xhtml</to-view-id>
+	</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+	<display-name>QueryRides.xhtml</display-name>
+	<from-view-id>/QueryRides.xhtml</from-view-id>
 	<navigation-case>
 		<from-outcome>close</from-outcome>
 		<to-view-id>/Driver.xhtml</to-view-id>

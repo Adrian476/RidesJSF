@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://java.sun.com/jsf/facelets"
+ xmlns:h="http://xmlns.jcp.org/jsf/html"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+<h:head><title>Driver</title></h:head>
+<h:body>
+<h:form>
+<table>
+	<tr>
+		<td>Depart City</td>
+		<td>
+			<select>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select>
+		</td>
+		<!-- PROTOTIPO, LOGIC BEAN REACTION + VALUES CHANGE -->
+	</tr>
+	<tr>
+		<td>Arrive City</td>
+		<td>
+			<select>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select>
+		</td>
+		<!-- PROTOTIPO, LOGIC BEAN REACTION + VALUES CHANGE + REACTION WITH VALUES OF DEPART CITIES -->
+	</tr>
+	<tr>
+		<td>Ride Date</td>
+		<td>
+			<p:calendar>
+			<!-- p:ajax -->
+			</p:calendar>
+		</td>
+		<!-- LOGIC BEAN REACTION -->
+	</tr>
+	
+	<!-- FALTA LA TABLA DONDE SE RECOGE LOS VIAJES -->
+</table>
+<tr>
+	<h:commandButton value="Close" action="close"/>
+</tr>
+</h:form>
+</h:body>
+</html>
