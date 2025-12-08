@@ -11,28 +11,43 @@
 <table>
 	<tr>
 		<td>Depart City</td>
-		<td><h:inputText></h:inputText></td>
+		<td>
+			<h:inputText id="depart" value="#{createRides.fromCity}">
+			<!-- validateRegex -->
+			<!-- p:ajax -->
+			</h:inputText>
+		</td>
+		<td><h:message for="depart" style="color:red"/></td>
 		<!-- LOGIC BEAN REACTION -->
 	</tr>
 	<tr>
 		<td>Arrival City</td>
-		<td><h:inputText></h:inputText></td>
+		<td>
+			<h:inputText id="arrive" value="#{createRides.toCity}">
+			<!-- validate Regex -->
+			<!-- p:ajax -->
+			</h:inputText>
+		</td>
+		
 		<!-- LOGIC BEAN REACTION -->
 	</tr>
 	<tr>
 		<td>Number of Seats</td>
 		<td>
-			<h:inputText>
+			<h:inputText id="nSeats" value="#{createRides.seats}">
 				<!-- f:validateRegex pattern="^([0-9])$"/-->
+				<!-- p:ajax -->
 			</h:inputText>
 			<!-- LOGIC BEAN REACTION -->
 		</td>
+		
 	</tr>
 	<tr>
 		<td>Price</td>
 		<td>
-			<h:inputText>
+			<h:inputText id="price" value="#{createRides.price}">
 				<!-- f:validateRegex pattern="^([0-9])$"/-->
+				<!-- p:ajax -->
 			</h:inputText>
 			<!-- LOGIC BEAN REACTION -->
 		</td>
@@ -40,7 +55,7 @@
 	<tr>
 		<td>Ride Date</td>
 		<td>
-			<p:calendar>
+			<p:calendar value="#{createRides.date}" pattern="dd/MM/yyyy" showIcon="true">
 			<!-- p:ajax -->
 			</p:calendar>
 		</td>
@@ -50,7 +65,7 @@
 <h:messages id="mensajes" style="color:blue"/>
 <tr>
 	<p>
-	<h:commandButton value="Create Ride" /><!-- ACTION -->
+	<h:commandButton value="Create Ride" action="#{createRides.createRide}"/>
 	<h:commandButton value="Close" action="close" immediate="true"/>
 	</p>
 </tr>
