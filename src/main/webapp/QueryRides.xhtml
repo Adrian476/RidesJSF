@@ -12,36 +12,50 @@
 	<tr>
 		<td>Depart City</td>
 		<td>
-			<select>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-			</select>
+			<p:selectOneMenu value="#{queryRides.selectedDepart}">
+				<f:selectItems value="#{queryRides.departCities}"/>
+				<p:ajax event="change" listener="#{queryRidesBean.updateArriveCities}" update="arriveCity calendar ridesTable" />
+			</p:selectOneMenu>
 		</td>
-		<!-- PROTOTIPO, LOGIC BEAN REACTION + VALUES CHANGE -->
 	</tr>
 	<tr>
 		<td>Arrive City</td>
 		<td>
-			<select>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-			</select>
+			<p:selectOneMenu id="arriveCity" value="#{queryRides.selectedArrive}">
+				<f:selectItems value="#{queryRides.arriveCities}" />
+            	<p:ajax event="change" update="calendar ridesTable" listener="#{queryRides.searchRides}" />
+			</p:selectOneMenu>
 		</td>
-		<!-- PROTOTIPO, LOGIC BEAN REACTION + VALUES CHANGE + REACTION WITH VALUES OF DEPART CITIES -->
 	</tr>
 	<tr>
 		<td>Ride Date</td>
 		<td>
-			<p:calendar>
-			<!-- p:ajax -->
+			<p:calendar id="calendar" value="#{queryRides.selectedDate}" pattern="dd/MM/yyyy" showIcon="true">
+				<p:ajax event="dateSelect" listener="#{queryRides.searchRides}" update="ridesTable title"/>
 			</p:calendar>
 		</td>
-		<!-- LOGIC BEAN REACTION -->
+		
 	</tr>
+	<tr>
+		<h3 id="title">
+			#{queryRides.getTableTitle}
+		</h3>
+	</tr>
+	<tr>
+		<p:dataTable id="ridesTable" value="#{queryRides.rides}" var="r">
+			<p:column headerText="Driver">
+				#{r.driver}
+			</p:column>
 	
-	<!-- FALTA LA TABLA DONDE SE RECOGE LOS VIAJES -->
+			<p:column headerText="Seats">
+				#{r.seats}
+			</p:column>
+	
+			<p:column headerText="Price">
+				#{r.price}
+			</p:column>
+		</p:dataTable>
+	</tr>
 </table>
 <tr>
 	<h:commandButton value="Close" action="close"/>
