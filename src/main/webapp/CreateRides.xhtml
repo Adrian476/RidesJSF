@@ -13,32 +13,32 @@
 		<td>Depart City</td>
 		<td>
 			<h:inputText id="depart" value="#{createRides.fromCity}">
-			<!-- validateRegex -->
-			<!-- p:ajax -->
+				<f:validateRegex pattern="^(([a-z]|[A-Z])+[0-9]?)$"/>
+				<f:ajax execute="depart" render="mensajes"/>
 			</h:inputText>
 		</td>
 		<td><h:message for="depart" style="color:red"/></td>
-		<!-- LOGIC BEAN REACTION -->
+		
 	</tr>
 	<tr>
 		<td>Arrival City</td>
 		<td>
 			<h:inputText id="arrive" value="#{createRides.toCity}">
-			<!-- validate Regex -->
-			<!-- p:ajax -->
+				<f:validateRegex pattern="^(([a-z]|[A-Z])+[0-9]?)$"/>
+				<f:ajax execute="arrive" render="mensajes"/>
 			</h:inputText>
 		</td>
 		
-		<!-- LOGIC BEAN REACTION -->
+		
 	</tr>
 	<tr>
 		<td>Number of Seats</td>
 		<td>
 			<h:inputText id="nSeats" value="#{createRides.seats}">
-				<!-- f:validateRegex pattern="^([0-9])$"/-->
-				<!-- p:ajax -->
+				<f:validateRegex pattern="^[0-9]+$" />
+				<f:ajax execute="nSeats" render="mensajes"/>
 			</h:inputText>
-			<!-- LOGIC BEAN REACTION -->
+			
 		</td>
 		
 	</tr>
@@ -46,10 +46,10 @@
 		<td>Price</td>
 		<td>
 			<h:inputText id="price" value="#{createRides.price}">
-				<!-- f:validateRegex pattern="^([0-9])$"/-->
-				<!-- p:ajax -->
+				<f:validateRegex pattern="^[0-9]+(\.[0-9]{1,2})?$" />
+				<f:ajax execute="price" render="mensajes"/>
 			</h:inputText>
-			<!-- LOGIC BEAN REACTION -->
+			
 		</td>
 	</tr>
 	<tr>
@@ -59,7 +59,7 @@
 			<!-- p:ajax -->
 			</p:calendar>
 		</td>
-		<!-- LOGIC BEAN REACTION -->
+		
 	</tr>
 </table>
 <h:messages id="mensajes" style="color:blue"/>
