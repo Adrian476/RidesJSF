@@ -1,4 +1,4 @@
-package modelo.businessLogic;
+package modelo.rideBusinessLogic;
 
 import java.util.Date;
 import java.util.List;

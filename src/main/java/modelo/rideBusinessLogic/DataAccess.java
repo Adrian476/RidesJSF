@@ -1,4 +1,4 @@
-package modelo.businessLogic;
+package modelo.rideBusinessLogic;
 
 import java.io.File;
 import java.net.NoRouteToHostException;
