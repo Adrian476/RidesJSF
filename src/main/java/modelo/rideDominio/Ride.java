@@ -10,14 +10,18 @@ import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
 
 @SuppressWarnings("serial")
-@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Ride implements Serializable {
-	@XmlID
 	@Id 
-	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
 	private Integer rideNumber;
 	private String from;
@@ -26,34 +30,10 @@ public class Ride implements Serializable {
 	private Date date;
 	private float price;
 	
+	@ManyToOne(targetEntity=Driver.class, fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private Driver driver;  
 	
-	public Ride(){
-		super();
-	}
-	
-	public Ride(Integer rideNumber, String from, String to, Date date, int nPlaces, float price, Driver driver) {
-		super();
-		this.rideNumber = rideNumber;
-		this.from = from;
-		this.to = to;
-		this.nPlaces = nPlaces;
-		this.date=date;
-		this.price=price;
-		this.driver = driver;
-	}
-
-	
-
-	public Ride(String from, String to,  Date date, int nPlaces, float price, Driver driver) {
-		super();
-		this.from = from;
-		this.to = to;
-		this.nPlaces = nPlaces;
-		this.date=date;
-		this.price=price;
-		this.driver = driver;
-	}
+	public Ride(){}
 	
 	/**
 	 * Get the  number of the ride
