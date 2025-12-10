@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,16 +25,27 @@ public class Ride implements Serializable {
 	@Id 
 	@GeneratedValue
 	private Integer rideNumber;
+	@Column(nullable = false)
 	private String from;
+	@Column(nullable = false)
 	private String to;
 	private int nPlaces;
+	@Column(nullable = false)
 	private Date date;
 	private float price;
-	
 	@ManyToOne(targetEntity=Driver.class, fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private Driver driver;  
 	
 	public Ride(){}
+	
+	public Ride(String from, String to, Date date, int nPlaces, float price, Driver driver) {
+        this.from = from;
+        this.to = to;
+        this.date = date;
+        this.nPlaces = nPlaces;
+        this.price = price;
+        this.driver = driver;
+    }
 	
 	/**
 	 * Get the  number of the ride

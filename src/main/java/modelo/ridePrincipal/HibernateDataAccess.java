@@ -1,26 +1,16 @@
 package modelo.ridePrincipal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-
 import configuration.UtilDate;
-import domain.Driver;
-import domain.Ride;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
 import jakarta.persistence.EntityManager;
 import modelo.JPAUtil;
-import java.util.*;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.Root;
-import modelo.JPAUtil;
-import modelo.dominio.EventoLogin;
+import modelo.rideDominio.Driver;
+import modelo.rideDominio.Ride;
 public class HibernateDataAccess {
 
 	public HibernateDataAccess() {}
@@ -67,16 +57,17 @@ public class HibernateDataAccess {
 			if(new Date().compareTo(date)>0) {
 				throw new RideMustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
 			}
-			em.getTransaction().begin();
 			
+			em.getTransaction().begin();
 			Driver driver = em.find(Driver.class, driverEmail);
 			if (driver.doesRideExists(from, to, date)) {
 				em.getTransaction().commit();
 				throw new RideAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
 			}
 			System.out.println("crea addRide");
-			ride = driver.addRide(from, to, date, nPlaces, price);
 			//next instruction can be obviated
+			ride = new Ride(from, to, date, nPlaces, price, driver);
+	        driver.getRides().add(ride);
 			em.persist(driver); 
 			em.getTransaction().commit();
 
@@ -122,13 +113,14 @@ public class HibernateDataAccess {
 	 */
 	public List<Date> getThisMonthDatesWithRides(String from, String to, Date date) {
 		System.out.println(">> DataAccess: getEventsMonth");
+		EntityManager em = JPAUtil.getEntityManager(); 
 		List<Date> res = new ArrayList<Date>();	
 		
 		Date firstDayMonthDate= UtilDate.firstDayMonth(date);
 		Date lastDayMonthDate= UtilDate.lastDayMonth(date);
 				
 		
-		TypedQuery<Date> query = db.createQuery("SELECT DISTINCT r.date FROM Ride r WHERE r.from=?1 AND r.to=?2 AND r.date BETWEEN ?3 and ?4",Date.class);   
+		TypedQuery<Date> query = em.createQuery("SELECT DISTINCT r.date FROM Ride r WHERE r.from=?1 AND r.to=?2 AND r.date BETWEEN ?3 and ?4",Date.class);   
 		
 		query.setParameter(1, from);
 		query.setParameter(2, to);
