@@ -1,5 +1,6 @@
 package modelo.ridePrincipal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -22,17 +23,21 @@ public class HibernateDataAccess {
 	 */
 	public List<String> getDepartCities(){
 		EntityManager em = JPAUtil.getEntityManager(); 
-		TypedQuery<String> query = em.createQuery("SELECT DISTINCT r.from FROM Ride r ORDER BY r.from", String.class);
+		System.out.println("=> getDepartCities");
+		TypedQuery<String> query = em.createQuery("SELECT DISTINCT r.departureCity FROM Ride r ORDER BY r.departureCity", String.class);
 		List<String> cities = query.getResultList();
+		System.out.println(cities.toString());
 		return cities;
 		
 	}
 	
 	public List<String> getArrivalCities(String from){
 		EntityManager em = JPAUtil.getEntityManager(); 
-		TypedQuery<String> query = em.createQuery("SELECT DISTINCT r.to FROM Ride r WHERE r.from=?1 ORDER BY r.to",String.class);
+		System.out.println("=> getDepartCities from "+ from);
+		TypedQuery<String> query = em.createQuery("SELECT DISTINCT r.arrivalCity FROM Ride r WHERE r.departureCity=?1 ORDER BY r.arrivalCity",String.class);
 		query.setParameter(1, from);
 		List<String> arrivingCities = query.getResultList(); 
+		System.out.println(arrivingCities.toString());
 		return arrivingCities;
 		
 	}
@@ -65,16 +70,19 @@ public class HibernateDataAccess {
 				em.getTransaction().commit();
 				throw new RideAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
 			}
-			System.out.println("crea addRide");
 			//next instruction can be obviated
 			ride = new Ride(from, to, date, nPlaces, price, driver);
 	        driver.getRides().add(ride);
 			em.persist(driver); 
 			em.getTransaction().commit();
+			
+			System.out.println("Ride successfully created and persisted to the DB =>  from= "+ride.getFrom() +" to= "+ride.getTo()+" driver ="+ride.getDriver().getEmail()+" date =  "+ride.getDate());
 			return ride;
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			em.getTransaction().commit();
+			
+
 			return null;
 		}
 	}
@@ -88,10 +96,10 @@ public class HibernateDataAccess {
 	 * @return collection of rides
 	 */
 	public List<Ride> getRides(String from, String to, Date date) {
-		System.out.println(">> DataAccess: getRides=> from= "+from+" to= "+to+" date "+date);
+		System.out.println(">> HibernateDataAccess: getRides=> from= "+from+" to= "+to+" date "+date);
 		EntityManager em = JPAUtil.getEntityManager(); 
 		List<Ride> res = new ArrayList<Ride>();	
-		TypedQuery<Ride> query = em.createQuery("SELECT r FROM Ride r WHERE r.from=?1 AND r.to=?2 AND r.date=?3",Ride.class);   
+		TypedQuery<Ride> query = em.createQuery("SELECT r FROM Ride r WHERE r.departureCity=?1 AND r.arrivalCity=?2 AND r.date=?3",Ride.class);   
 		query.setParameter(1, from);
 		query.setParameter(2, to);
 		query.setParameter(3, date);
@@ -99,6 +107,7 @@ public class HibernateDataAccess {
 	 	 for (Ride ride:rides){
 		   res.add(ride);
 		  }
+	 	 System.out.println("Retrieved rides from the DB => " + res.toString());
 	 	return res;
 	}
 	
@@ -129,6 +138,39 @@ public class HibernateDataAccess {
 		   res.add(d);
 		  }
 	 	return res;
+	}
+	
+	public void initializeDB() {
+	    EntityManager em = JPAUtil.getEntityManager();
+	    try {
+	        em.getTransaction().begin();
+
+	        // Crea un driver de prueba si no existe
+	        Driver driver = em.find(Driver.class, "driver@test.com");
+	        if (driver == null) {
+	            driver = new Driver("driver@test.com", "Test Driver");
+	        }
+	        Calendar cal = Calendar.getInstance();
+            cal.set(2025, Calendar.DECEMBER, 25);
+            Date fecha = cal.getTime();
+	        // Crea un ride de prueba
+	        Ride ride = new Ride("Bilbao", "Madrid", fecha, 4, 25.5f, driver);
+	        driver.getRides().add(ride);
+
+	        em.persist(driver);
+	        // o em.persist(ride); dependiendo de tu cascade
+
+	        em.getTransaction().commit();
+	        System.out.println("Base de datos inicializada con datos de prueba");
+	    } catch (Exception e) {
+	        if (em.getTransaction().isActive()) {
+	            em.getTransaction().rollback();
+	        }
+	        e.printStackTrace();
+	        // No lanzar excepción → no romper la app por datos de prueba
+	    } finally {
+	        em.close();
+	    }
 	}
 
 }

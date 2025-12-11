@@ -16,8 +16,7 @@ public class BLFacadeImplementation  implements BLFacade {
 		
 		
 		    dbManager = new HibernateDataAccess();
-		    
-		//dbManager.close();
+		    dbManager.initializeDB();
 
 		
 	}

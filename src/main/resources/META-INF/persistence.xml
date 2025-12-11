@@ -8,7 +8,7 @@
  <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
  <!-- Clases de entidad -->
 <!-- <class>modelo.rideDominio.Driver</class> -->
-        <!-- <class>modelo.rideDominio.Ride</class> -->
+<!-- <class>modelo.rideDominio.Ride</class> -->
  <properties>
  <property name="jakarta.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
  <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://localhost:3306/eventos"/>

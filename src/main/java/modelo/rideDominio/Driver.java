@@ -5,10 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id; 
-
+import jakarta.persistence.*;
 
 import jakarta.persistence.OneToMany;
 
@@ -27,7 +26,7 @@ public class Driver implements Serializable {
     @OneToMany(mappedBy = "driver",
                cascade = CascadeType.ALL,
                orphanRemoval = true,
-               fetch = FetchType.LAZY)
+               fetch = FetchType.EAGER)
     private List<Ride> rides = new ArrayList<>();
     
     public Driver() {}

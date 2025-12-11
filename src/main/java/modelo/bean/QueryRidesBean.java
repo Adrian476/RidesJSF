@@ -28,18 +28,21 @@ public class QueryRidesBean implements Serializable{
     public QueryRidesBean() {
         facade = new BLFacadeImplementation();
         departCities = facade.getDepartCities();   
-        arriveCities = new ArrayList<>();
+        arriveCities = facade.getDestinationCities(selectedDepart);
     }
 
 
     public void updateArriveCities() {
-        if (selectedDepart != null) {
+        //if (selectedDepart != null) 
+    	System.out.println("Updating the destinations cities!");
             arriveCities = facade.getDestinationCities(selectedDepart);
-        }
+        
     }
 
 
     public void searchRides() {
+    	departCities = facade.getDepartCities();
+    	updateArriveCities();
         if (selectedDepart != null && selectedArrive != null && selectedDate != null) {
             rides = facade.getRides(selectedDepart, selectedArrive, selectedDate);
         } else {
@@ -62,9 +65,11 @@ public class QueryRidesBean implements Serializable{
 
 
     public List<String> getDepartCities() { 
+    	departCities = facade.getDepartCities();  
     	return departCities; 
     }
     public List<String> getArriveCities() { 
+    	arriveCities = facade.getDestinationCities(selectedDepart);
     	return arriveCities; 
     }
 
@@ -79,6 +84,7 @@ public class QueryRidesBean implements Serializable{
     	return selectedArrive; 
     }
     public void setSelectedArrive(String s) { 
+    	System.out.println("Changing arrival from = " + this.selectedArrive + "to = " + s);
     	this.selectedArrive = s; 
     }
 

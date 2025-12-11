@@ -31,13 +31,10 @@
 		<td>Ride Date</td>
 		<td>
 			<p:calendar id="calendar" value="#{queryRides.selectedDate}" pattern="dd/MM/yyyy" showIcon="true">
-				<p:ajax event="dateSelect" listener="#{queryRides.searchRides}" update="ridesTable title"/>
+				<p:ajax event="dateSelect" listener="#{queryRides.searchRides}" update="ridesTable"/>
 			</p:calendar>
 		</td>
 		
-	</tr>
-	<tr>
-		<td><h3 id="title">#{queryRides.getTableTitle}</h3></td>
 	</tr>
 	<tr>
 		<p:dataTable id="ridesTable" value="#{queryRides.rides}" var="r">
@@ -46,7 +43,7 @@
 			</p:column>
 	
 			<p:column headerText="Seats">
-				#{r.seats}
+				#{r.nPlaces}
 			</p:column>
 	
 			<p:column headerText="Price">

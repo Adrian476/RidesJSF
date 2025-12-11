@@ -25,12 +25,12 @@ public class Ride implements Serializable {
 	@Id 
 	@GeneratedValue
 	private Integer rideNumber;
-	@Column(name = "departure_city", nullable = false)
-	private String from;
-	@Column(name = "arrival_city", nullable = false)
-	private String to;
+	@Column(nullable = false)
+	private String departureCity;
+	@Column(nullable = false)
+	private String arrivalCity;
 	@Column(name = "available_seats")
-	private int nPlaces;
+	private int seats;
 	@Column(nullable = false)
 	private Date date;
 	private float price;
@@ -40,10 +40,10 @@ public class Ride implements Serializable {
 	public Ride(){}
 	
 	public Ride(String from, String to, Date date, int nPlaces, float price, Driver driver) {
-        this.from = from;
-        this.to = to;
+        this.departureCity = from;
+        this.arrivalCity = to;
         this.date = date;
-        this.nPlaces = nPlaces;
+        this.seats = nPlaces;
         this.price = price;
         this.driver = driver;
     }
@@ -75,7 +75,7 @@ public class Ride implements Serializable {
 	 */
 
 	public String getFrom() {
-		return from;
+		return departureCity;
 	}
 
 
@@ -86,7 +86,7 @@ public class Ride implements Serializable {
 	 */	
 	
 	public void setFrom(String origin) {
-		this.from = origin;
+		this.departureCity = origin;
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class Ride implements Serializable {
 	 */
 
 	public String getTo() {
-		return to;
+		return arrivalCity;
 	}
 
 
@@ -106,7 +106,7 @@ public class Ride implements Serializable {
 	 * @param destination to be set
 	 */	
 	public void setTo(String destination) {
-		this.to = destination;
+		this.arrivalCity = destination;
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class Ride implements Serializable {
 
 	
 	public float getnPlaces() {
-		return nPlaces;
+		return seats;
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class Ride implements Serializable {
 	 */
 
 	public void setnPlaces(int nPlaces) {
-		this.nPlaces = nPlaces;
+		this.seats = nPlaces;
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class Ride implements Serializable {
 
 
 	public String toString(){
-		return rideNumber+";"+";"+from+";"+to+";"+date;  
+		return rideNumber+";"+";"+departureCity+";"+arrivalCity+";"+date;  
 	}
 
 

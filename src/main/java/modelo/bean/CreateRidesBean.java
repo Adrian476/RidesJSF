@@ -2,6 +2,7 @@ package modelo.bean;
 import java.io.Serializable;
 import java.util.*;
 import modelo.rideBusinessLogic.*;
+import modelo.rideDominio.Driver;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 
@@ -25,7 +26,9 @@ public class CreateRidesBean implements Serializable{
     
     public String createRides() {
     	try {
+    		
     		facade.createRide(fromCity, toCity, date, Integer.parseInt(seats.trim()), Float.parseFloat(price.trim()), driverEmail);
+    		System.out.println("Viaje correctamente creado");
     		return "viaje creado";
     	} catch (Exception e){
     		e.printStackTrace();
