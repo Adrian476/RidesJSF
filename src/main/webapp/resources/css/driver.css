@@ -8,3 +8,48 @@
     transition: 0.2s ease-in-out;
     place-items: center;
 }
+
+/* Centra todo el contenido de la página */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo bonito para los botones */
+.boton {
+    width: 280px;
+    height: 60px;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 15px;
+    background-color: #007ad9;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.boton:hover {
+    background-color: #005fa3;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.boton:active {
+    transform: translateY(1px);
+}
+
+/* Título más grande y bonito */
+h3 {
+    color: #333;
+    font-size: 26px;
+    margin-bottom: 40px;
+}
