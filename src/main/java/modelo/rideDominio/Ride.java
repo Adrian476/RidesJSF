@@ -133,7 +133,7 @@ public class Ride implements Serializable {
 	}
 
 	
-	public float getnPlaces() {
+	public float getSeats() {
 		return seats;
 	}
 
@@ -143,7 +143,7 @@ public class Ride implements Serializable {
 	 * @param  nPlaces places to be set
 	 */
 
-	public void setnPlaces(int nPlaces) {
+	public void setSeats(int nPlaces) {
 		this.seats = nPlaces;
 	}
 

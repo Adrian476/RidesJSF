@@ -8,41 +8,47 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 
 
+@SuppressWarnings("serial")
 @Named("queryRides")
 @SessionScoped
 public class QueryRidesBean implements Serializable{
-	private static final long serialVersionUID = 1L;
 	
-	private BLFacade facade;
+	private String selectedDepart;
+    String selectedArrive;
+    Date selectedDate;
+    
+	List<Ride> rides = Collections.emptyList();
 
-    private List<String> departCities;
-    private List<String> arriveCities;
-
-    private String selectedDepart;
-    private String selectedArrive;
-
-    private Date selectedDate;
-
-    private List<Ride> rides;
+    List<String> departCities = Collections.emptyList();
+    List<String> arriveCities = Collections.emptyList();
+    private final BLFacade facade;
 
     public QueryRidesBean() {
         facade = new BLFacadeImplementation();
-        departCities = facade.getDepartCities();   
-        arriveCities = facade.getDestinationCities(selectedDepart);
+        loadDepartCities();
     }
 
 
+    private void loadDepartCities() {
+        departCities = facade.getDepartCities();
+    }
+    
     public void updateArriveCities() {
-        //if (selectedDepart != null) 
-    	System.out.println("Updating the destinations cities!");
+    	System.out.println("updateArriveCities() -> origen: " + selectedDepart);
+        if (selectedDepart != null && !selectedDepart.isEmpty()) {
             arriveCities = facade.getDestinationCities(selectedDepart);
+        } else {
+            arriveCities = Collections.emptyList();
+        }
+        selectedArrive = null;
+        selectedDate = null;
+        rides = Collections.emptyList();
         
     }
 
 
     public void searchRides() {
-    	departCities = facade.getDepartCities();
-    	updateArriveCities();
+    	System.out.println("searchRides() -> " + selectedDepart + " → " + selectedArrive + " el " + selectedDate);
         if (selectedDepart != null && selectedArrive != null && selectedDate != null) {
             rides = facade.getRides(selectedDepart, selectedArrive, selectedDate);
         } else {
@@ -65,11 +71,9 @@ public class QueryRidesBean implements Serializable{
 
 
     public List<String> getDepartCities() { 
-    	departCities = facade.getDepartCities();  
     	return departCities; 
     }
     public List<String> getArriveCities() { 
-    	arriveCities = facade.getDestinationCities(selectedDepart);
     	return arriveCities; 
     }
 

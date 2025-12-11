@@ -146,17 +146,18 @@ public class HibernateDataAccess {
 	        em.getTransaction().begin();
 
 	        // Crea un driver de prueba si no existe
-	        Driver driver = em.find(Driver.class, "driver@test.com");
+	        Driver driver = em.find(Driver.class, "DriverTestJSF");
 	        if (driver == null) {
-	            driver = new Driver("driver@test.com", "Test Driver");
+	            driver = new Driver("DriverTestJSF", "Test Driver");
 	        }
-	        Calendar cal = Calendar.getInstance();
-            cal.set(2025, Calendar.DECEMBER, 25);
-            Date fecha = cal.getTime();
+	        Date fecha = UtilDate.newDate(2025, 11, 25);
 	        // Crea un ride de prueba
 	        Ride ride = new Ride("Bilbao", "Madrid", fecha, 4, 25.5f, driver);
+	        Ride ride2 = new Ride("Getxo", "Portugalete", fecha, 4, 25.5f, driver);
+	        Ride ride3 = new Ride("Bilbao", "Donostia", fecha, 4, 25.5f, driver);
 	        driver.getRides().add(ride);
-
+	        driver.getRides().add(ride2);
+	        driver.getRides().add(ride3);
 	        em.persist(driver);
 	        // o em.persist(ride); dependiendo de tu cascade
 

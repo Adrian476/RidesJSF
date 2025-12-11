@@ -1,60 +1,68 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
- xmlns:ui="http://java.sun.com/jsf/facelets"
- xmlns:h="http://xmlns.jcp.org/jsf/html"
- xmlns:f="http://xmlns.jcp.org/jsf/core"
- xmlns:p="http://primefaces.org/ui">
-<h:head><title>Driver</title></h:head>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Driver</title>
+</h:head>
 <h:body>
-<h:form>
-<table>
-	<tr>
-		<td>Depart City</td>
-		<td>
-			<p:selectOneMenu value="#{queryRides.selectedDepart}">
-				<f:selectItems value="#{queryRides.departCities}"/>
-				<p:ajax event="change" listener="#{queryRidesBean.updateArriveCities}" update="arriveCity calendar ridesTable" />
-			</p:selectOneMenu>
-		</td>
-	</tr>
-	<tr>
-		<td>Arrive City</td>
-		<td>
-			<p:selectOneMenu id="arriveCity" value="#{queryRides.selectedArrive}">
-				<f:selectItems value="#{queryRides.arriveCities}" />
-            	<p:ajax event="change" update="calendar ridesTable" listener="#{queryRides.searchRides}" />
-			</p:selectOneMenu>
-		</td>
-	</tr>
-	<tr>
-		<td>Ride Date</td>
-		<td>
-			<p:calendar id="calendar" value="#{queryRides.selectedDate}" pattern="dd/MM/yyyy" showIcon="true">
-				<p:ajax event="dateSelect" listener="#{queryRides.searchRides}" update="ridesTable"/>
-			</p:calendar>
-		</td>
-		
-	</tr>
-	<tr>
-		<p:dataTable id="ridesTable" value="#{queryRides.rides}" var="r">
-			<p:column headerText="Driver">
-				#{r.driver}
-			</p:column>
-	
-			<p:column headerText="Seats">
-				#{r.nPlaces}
-			</p:column>
-	
-			<p:column headerText="Price">
-				#{r.price}
-			</p:column>
-		</p:dataTable>
-	</tr>
-</table>
-<tr>
-	<h:commandButton value="Close" action="close"/>
-</tr>
-</h:form>
+	<h:form>
+		<table>
+			<tr>
+				<td>Depart City</td>
+				<td><p:selectOneMenu value="#{queryRides.selectedDepart}">
+						<f:selectItem itemLabel="Selecciona origen" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{queryRides.departCities}" />
+						<p:ajax event="change" listener="#{queryRides.updateArriveCities}"
+							update="arriveCity ridesTable" />
+					</p:selectOneMenu></td>
+			</tr>
+			<tr>
+				<td>Arrive City</td>
+				<td><p:selectOneMenu id="arriveCity"
+						value="#{queryRides.selectedArrive}">
+						<f:selectItem itemLabel="Selecciona destino" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{queryRides.arriveCities}" />
+						<p:ajax event="change" listener="#{queryRides.searchRides}"
+							update="ridesTable" />
+					</p:selectOneMenu></td>
+			</tr>
+			<tr>
+				<td>Ride Date</td>
+				<td><p:calendar id="calendar"
+						value="#{queryRides.selectedDate}" pattern="dd/MM/yyyy"
+						showIcon="true">
+						<p:ajax event="dateSelect" listener="#{queryRides.searchRides}"
+							update="ridesTable" />
+					</p:calendar></td>
+
+			</tr>
+			<tr>
+				<td colspan="2">
+					<!-- Para que ocupe toda la anchura --> <p:dataTable
+						id="ridesTable" value="#{queryRides.rides}" var="r"
+						style="width:100%;">
+						<p:column headerText="Driver">
+                #{r.driver.name}  <!-- Mejor: usa .name para mostrar el nombre, no el objeto entero -->
+						</p:column>
+						<p:column headerText="Seats">
+                #{r.seats}  <!-- Usa seats directamente, o mantén nPlaces si prefieres -->
+						</p:column>
+						<p:column headerText="Price">
+                #{r.price} €
+            </p:column>
+					</p:dataTable>
+				</td>
+			</tr>
+		</table>
+		<tr>
+			<h:commandButton value="Close" action="close" />
+		</tr>
+	</h:form>
 </h:body>
 </html>
