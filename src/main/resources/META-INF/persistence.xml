@@ -7,8 +7,8 @@
  <persistence-unit name="miUnidadPersistencia" transaction-type="RESOURCE_LOCAL">
  <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
  <!-- Clases de entidad -->
- <class>modelo.rideDominio.Ride</class>
- <class>modelo.rideDomimio.Driver</class>
+<!-- <class>modelo.rideDominio.Driver</class> -->
+        <!-- <class>modelo.rideDominio.Ride</class> -->
  <properties>
  <property name="jakarta.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
  <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://localhost:3306/eventos"/>
@@ -24,26 +24,4 @@
  <property name="hibernate.show_sql" value="true"/>
  </properties>
  </persistence-unit>
- 
- <persistence-unit name="RidesJSF" transaction-type="RESOURCE_LOCAL">
-        <!-- IMPORTANTE: ObjectDB provider -->
-        <provider>com.objectdb.jpa.Provider</provider>
-        
-        <!-- IMPORTANTE: Añade las clases de entidad -->
-        <class>modelo.dominio.Ride</class>
-        <class>modelo.dominio.Usuario</class>
-        <!-- Añade todas las clases que tengas -->
-        
-        <properties>
-            <!-- Configuración SIMPLE para ObjectDB -->
-            <property name="javax.persistence.jdbc.url" 
-                      value="objectdb:${user.dir}/db/rides.odb"/>
-            
-            <property name="javax.persistence.jdbc.user" value="admin"/>
-            <property name="javax.persistence.jdbc.password" value="admin"/>
-            
-            <!-- IMPORTANTE: Para modo embedded -->
-            <property name="objectdb.embedded" value="true"/>
-        </properties>
-    </persistence-unit>
 </persistence>

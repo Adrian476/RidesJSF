@@ -2,13 +2,13 @@ package modelo.rideDominio;
 
 import java.io.*;
 import java.util.Date;
-
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlIDREF;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+//
+//import javax.persistence.*;
+//import javax.xml.bind.annotation.XmlAccessType;
+//import javax.xml.bind.annotation.XmlAccessorType;
+//import javax.xml.bind.annotation.XmlID;
+//import javax.xml.bind.annotation.XmlIDREF;
+//import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -25,10 +25,11 @@ public class Ride implements Serializable {
 	@Id 
 	@GeneratedValue
 	private Integer rideNumber;
-	@Column(nullable = false)
+	@Column(name = "departure_city", nullable = false)
 	private String from;
-	@Column(nullable = false)
+	@Column(name = "arrival_city", nullable = false)
 	private String to;
+	@Column(name = "available_seats")
 	private int nPlaces;
 	@Column(nullable = false)
 	private Date date;
@@ -142,7 +143,7 @@ public class Ride implements Serializable {
 	 * @param  nPlaces places to be set
 	 */
 
-	public void setBetMinimum(int nPlaces) {
+	public void setnPlaces(int nPlaces) {
 		this.nPlaces = nPlaces;
 	}
 

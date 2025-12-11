@@ -2,11 +2,8 @@ package modelo.bean;
 
 import java.io.Serializable;
 import java.util.*;
-
-import businessLogic.BLFacade;
-import businessLogic.BLFacadeImplementation;
-import domain.Ride;
-import jakarta.enterprise.context.ApplicationScoped;
+import modelo.rideBusinessLogic.*;
+import modelo.rideDominio.*;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 

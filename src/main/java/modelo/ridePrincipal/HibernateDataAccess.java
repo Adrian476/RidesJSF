@@ -3,14 +3,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import configuration.UtilDate;
-import exceptions.RideAlreadyExistException;
-import exceptions.RideMustBeLaterThanTodayException;
 import jakarta.persistence.EntityManager;
 import modelo.JPAUtil;
 import jakarta.persistence.*;
 import modelo.rideDominio.Driver;
 import modelo.rideDominio.Ride;
+import modelo.rideExceptions.RideAlreadyExistException;
+import modelo.rideExceptions.RideMustBeLaterThanTodayException;
 public class HibernateDataAccess {
 
 	public HibernateDataAccess() {}
@@ -70,15 +71,12 @@ public class HibernateDataAccess {
 	        driver.getRides().add(ride);
 			em.persist(driver); 
 			em.getTransaction().commit();
-
 			return ride;
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			em.getTransaction().commit();
 			return null;
 		}
-		
-		
 	}
 
 	/**

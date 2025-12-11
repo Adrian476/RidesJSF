@@ -78,14 +78,20 @@
  <version>3.5.0</version>
 </dependency>
 
+<!--
 <dependency>
  <groupId>1.0</groupId>
  <artifactId>Rides24</artifactId>
  <version>0.0.1-SNAPSHOT</version>
  <scope>compile</scope>
- </dependency>
- 
+ </dependency> -->
 
+
+ 	<dependency>
+ 		<groupId>org.is2.frameworks</groupId>
+ 		<artifactId>LoginJSF</artifactId>
+ 		<version>0.0.1-SNAPSHOT</version>
+ 	</dependency>
  </dependencies>
 
  <build>

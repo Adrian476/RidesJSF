@@ -1,12 +1,7 @@
 package modelo.bean;
-
-
 import java.io.Serializable;
 import java.util.*;
-
-import businessLogic.BLFacade;
-import businessLogic.BLFacadeImplementation;
-import jakarta.enterprise.context.ApplicationScoped;
+import modelo.rideBusinessLogic.*;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 
@@ -18,8 +13,8 @@ public class CreateRidesBean implements Serializable{
 	private String fromCity;
     private String toCity;
     private Date date; 
-    private int seats;
-    private float price;
+    private String seats;
+    private String price;
     private String driverEmail = "DriverTestJSF";
 
     private BLFacade facade;
@@ -30,7 +25,7 @@ public class CreateRidesBean implements Serializable{
     
     public String createRides() {
     	try {
-    		facade.createRide(fromCity, toCity, date, seats, price, driverEmail);
+    		facade.createRide(fromCity, toCity, date, Integer.parseInt(seats.trim()), Float.parseFloat(price.trim()), driverEmail);
     		return "viaje creado";
     	} catch (Exception e){
     		e.printStackTrace();
@@ -62,19 +57,19 @@ public class CreateRidesBean implements Serializable{
     	this.date = date; 
     }
 
-    public int getSeats() { 
+    public String getSeats() { 
     	return seats; 
     }
 
-    public void setSeats(int seats) { 
+    public void setSeats(String seats) { 
     	this.seats = seats; 
     }
 
-    public float getPrice() { 
+    public String getPrice() { 
     	return price; 
     }
 
-    public void setPrice(float price) { 
+    public void setPrice(String price) { 
     	this.price = price; 
     }
     
