@@ -6,7 +6,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Driver</title>
+	<title>Consultar Viajes Disponibles</title>
 </h:head>
 <h:body>
 	<h:form>
@@ -18,7 +18,8 @@
 							noSelectionOption="true" />
 						<f:selectItems value="#{queryRides.departCities}" />
 						<p:ajax event="change" listener="#{queryRides.updateArriveCities}"
-							update="arriveCity ridesTable" />
+							update="arriveCity calendar ridesTable" />
+						<!-- Añadido "calendar" para limpiar fecha -->
 					</p:selectOneMenu></td>
 			</tr>
 			<tr>
@@ -40,29 +41,26 @@
 						<p:ajax event="dateSelect" listener="#{queryRides.searchRides}"
 							update="ridesTable" />
 					</p:calendar></td>
-
 			</tr>
 			<tr>
-				<td colspan="2">
-					<!-- Para que ocupe toda la anchura --> <p:dataTable
-						id="ridesTable" value="#{queryRides.rides}" var="r"
-						style="width:100%;">
-						<p:column headerText="Driver">
-                #{r.driver.name}  <!-- Mejor: usa .name para mostrar el nombre, no el objeto entero -->
+				<td colspan="2"><p:dataTable id="ridesTable"
+						value="#{queryRides.rides}" var="r"
+						emptyMessage="No hay viajes disponibles" style="width:100%;">
+						<p:column headerText="Conductor">
+							<h:outputText value="#{r.driver.name}" />
 						</p:column>
-						<p:column headerText="Seats">
-                #{r.seats}  <!-- Usa seats directamente, o mantén nPlaces si prefieres -->
+						<p:column headerText="Plazas libres">
+							<h:outputText value="#{r.seats}" />
+							<!-- CORREGIDO: era #{r.seats} -->
 						</p:column>
-						<p:column headerText="Price">
-                #{r.price} €
-            </p:column>
-					</p:dataTable>
-				</td>
+						<p:column headerText="Precio">
+							<h:outputText value="#{r.price} €" />
+						</p:column>
+					</p:dataTable></td>
 			</tr>
 		</table>
-		<tr>
-			<h:commandButton value="Close" action="close" />
-		</tr>
+		<br />
+		<h:commandButton value="Cerrar" action="close" />
 	</h:form>
 </h:body>
 </html>
