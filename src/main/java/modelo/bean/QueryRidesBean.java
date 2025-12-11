@@ -4,13 +4,13 @@ import java.io.Serializable;
 import java.util.*;
 import modelo.rideBusinessLogic.*;
 import modelo.rideDominio.*;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
 
 @SuppressWarnings("serial")
 @Named("queryRides")
-@SessionScoped
+@ViewScoped
 public class QueryRidesBean implements Serializable{
 	
 	private String selectedDepart;
@@ -25,13 +25,13 @@ public class QueryRidesBean implements Serializable{
 
     public QueryRidesBean() {
         facade = new BLFacadeImplementation();
-        loadDepartCities();
+        
     }
 
 
-    private void loadDepartCities() {
-        departCities = facade.getDepartCities();
-    }
+//    private void loadDepartCities() {
+//        departCities = facade.getDepartCities();
+//    }
     
     public void updateArriveCities() {
     	System.out.println("updateArriveCities() -> origen: " + selectedDepart);
@@ -71,10 +71,18 @@ public class QueryRidesBean implements Serializable{
 
 
     public List<String> getDepartCities() { 
-    	return departCities; 
+    	if (departCities == null || departCities.isEmpty()) {
+            departCities = facade.getDepartCities();
+        }
+        return departCities;
     }
     public List<String> getArriveCities() { 
-    	return arriveCities; 
+    	if (arriveCities == null || arriveCities.isEmpty()) {  // Lazy si vacío
+            if (selectedDepart != null && !selectedDepart.isEmpty()) {
+                arriveCities = facade.getDestinationCities(selectedDepart);
+            }
+        }
+        return arriveCities;
     }
 
     public String getSelectedDepart() { 

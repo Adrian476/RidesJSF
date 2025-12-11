@@ -1,6 +1,10 @@
 package modelo.rideBusinessLogic;
 import java.util.Date;
 import java.util.List;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import modelo.JPAUtil;
 import modelo.rideDominio.Ride;
 import modelo.ridePrincipal.HibernateDataAccess;
 import modelo.rideExceptions.*;
@@ -11,14 +15,24 @@ import modelo.rideExceptions.*;
 public class BLFacadeImplementation  implements BLFacade {
 	HibernateDataAccess dbManager;
 
-	public BLFacadeImplementation()  {		
-		System.out.println("Creating BLFacadeImplementation instance");
-		
-		
-		    dbManager = new HibernateDataAccess();
-		    dbManager.initializeDB();
+	public BLFacadeImplementation() {
+	    System.out.println("Creating BLFacadeImplementation instance");
+	    dbManager = new HibernateDataAccess();
 
-		
+	    // Condicional: Solo inicializa si NO hay datos (check si hay drivers o rides)
+	    EntityManager em = JPAUtil.getEntityManager();
+	    try {
+	        TypedQuery<Long> query = em.createQuery("SELECT COUNT(d) FROM Driver d", Long.class);
+	        long count = query.getSingleResult();
+	        if (count == 0) {  //BD vacía
+	            dbManager.initializeDB();
+	            System.out.println("BD inicializada por primera vez");
+	        } else {
+	            System.out.println("BD ya inicializada, skip");
+	        }
+	    } finally {
+	        em.close();
+	    }
 	}
 	
     public BLFacadeImplementation(HibernateDataAccess da)  {
