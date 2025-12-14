@@ -151,6 +151,32 @@ public class HibernateDataAccess {
 		if (!driver.getPassword().equals(password)) throw new IncorrectPasswordException("Contraseña no válida");
 		return driver;
 	}
+	
+	public Driver registerDriver(String mail, String name, String password) {
+		System.out.println("Hibernate DataAccess => registerDriver(" + mail + ", " + name + ")");
+	    EntityManager em = JPAUtil.getEntityManager();
+	    try {
+	        em.getTransaction().begin();
+	        Driver existing = em.find(Driver.class, mail);
+	        if (existing != null) {
+	            em.getTransaction().rollback();
+	            return null; 
+	        }
+
+	        Driver newDriver = new Driver(mail, name, password);
+	        em.persist(newDriver);
+
+	        em.getTransaction().commit();
+	        System.out.println("Driver registrado correctamente: " + mail);
+	        return newDriver;
+	    } catch (Exception e) {
+	        if (em.getTransaction().isActive()) {
+	            em.getTransaction().rollback();
+	        }
+	        e.printStackTrace();
+	        throw new RuntimeException("Error al registrar el driver", e);
+	    }
+	}
 
 	public void initializeDB() {
 		EntityManager em = JPAUtil.getEntityManager();
@@ -160,7 +186,7 @@ public class HibernateDataAccess {
 			// Crea un driver de prueba si no existe
 			Driver driver = em.find(Driver.class, "DriverTestJSF");
 			if (driver == null) {
-				driver = new Driver("DriverTestJSF", "Test Driver");
+				driver = new Driver("driver@test.com", "Test Driver", "test123");
 			}
 			Date fecha = UtilDate.newDate(2025, 11, 25);
 			// Crea un ride de prueba

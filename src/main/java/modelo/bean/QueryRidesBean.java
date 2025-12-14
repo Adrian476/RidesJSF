@@ -27,11 +27,6 @@ public class QueryRidesBean implements Serializable{
         facade = new BLFacadeImplementation();
         
     }
-
-
-//    private void loadDepartCities() {
-//        departCities = facade.getDepartCities();
-//    }
     
     public void updateArriveCities() {
     	System.out.println("updateArriveCities() -> origen: " + selectedDepart);
@@ -77,7 +72,7 @@ public class QueryRidesBean implements Serializable{
         return departCities;
     }
     public List<String> getArriveCities() { 
-    	if (arriveCities == null || arriveCities.isEmpty()) {  // Lazy si vacío
+    	if (arriveCities == null || arriveCities.isEmpty()) { 
             if (selectedDepart != null && !selectedDepart.isEmpty()) {
                 arriveCities = facade.getDestinationCities(selectedDepart);
             }

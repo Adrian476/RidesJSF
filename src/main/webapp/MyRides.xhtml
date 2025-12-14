@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Mis viajes</title>
+</h:head>
+<h:body>
+	<h:form>
+		<table>
+			<tr>
+				<td>Depart City</td>
+				<td><p:selectOneMenu value="#{queryRides.selectedDepart}">
+						<f:selectItem itemLabel="Selecciona origen" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{queryRides.departCities}" />
+						<p:ajax event="change" listener="#{queryRides.updateArriveCities}"
+							update="arriveCity calendar ridesTable" />
+						<!-- Añadido "calendar" para limpiar fecha -->
+					</p:selectOneMenu></td>
+			</tr>
+			<tr>
+				<td>Arrive City</td>
+				<td><p:selectOneMenu id="arriveCity"
+						value="#{queryRides.selectedArrive}">
+						<f:selectItem itemLabel="Selecciona destino" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{queryRides.arriveCities}" />
+						<p:ajax event="change" listener="#{queryRides.searchRides}"
+							update="ridesTable" />
+					</p:selectOneMenu></td>
+			</tr>
+			<tr>
+				<td>Ride Date</td>
+				<td><p:calendar id="calendar"
+						value="#{queryRides.selectedDate}" pattern="dd/MM/yyyy"
+						showIcon="true">
+						<p:ajax event="dateSelect" listener="#{queryRides.searchRides}"
+							update="ridesTable" />
+					</p:calendar></td>
+			</tr>
+			<tr>
+				<td colspan="2"><p:dataTable id="ridesTable"
+						value="#{queryRides.rides}" var="r"
+						emptyMessage="No hay viajes" style="width:100%;">
+						<p:column headerText="Conductor">
+							<h:outputText value="#{r.driver.name}" />
+						</p:column>
+						<p:column headerText="Plazas libres">
+							<h:outputText value="#{r.seats}" />
+							<!-- CORREGIDO: era #{r.seats} -->
+						</p:column>
+						<p:column headerText="Precio">
+							<h:outputText value="#{r.price} €" />
+						</p:column>
+					</p:dataTable></td>
+			</tr>
+		</table>
+		<br />
+		<h:commandButton value="Cerrar" action="close" />
+	</h:form>
+</h:body>
+</html>

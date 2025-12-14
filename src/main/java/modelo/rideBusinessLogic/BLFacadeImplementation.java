@@ -98,6 +98,13 @@ public class BLFacadeImplementation  implements BLFacade {
 	public Driver logIn(String mail, String password) throws IncorrectPasswordException {
 		return dbManager.logIn(mail, password);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Driver registerDriver(String mail, String name, String password) {
+	    return dbManager.registerDriver(mail, name, password);
+	}
 
 
 

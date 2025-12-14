@@ -1,24 +1,33 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
- xmlns:ui="http://java.sun.com/jsf/facelets"
- xmlns:h="http://xmlns.jcp.org/jsf/html"
- xmlns:f="http://xmlns.jcp.org/jsf/core"
- xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Driver</title>
-	<h:outputStylesheet library="css" name="driver.css" />	
+	<h:outputStylesheet library="css" name="driver.css" />
 </h:head>
 <h:body>
-<h:form id="miForm">
-<h3 style="text-align:center; margin-bottom:30px;">
-    Por favor, seleccione qué desea hacer:
-</h3>
-
-<div style="text-align:center;">
-    <h:commandButton value="Crear Viaje" action="crear_viaje" styleClass="boton"/><br/><br/>
-    <h:commandButton value="Consultar Viajes" action="ver_viajes" styleClass="boton"/><br/><br/>
-</div>
-</h:form>
+	<h1>
+		¡Bienvenido de nuevo, 
+		<h:outputText value="#{login.user.name}" />
+		!
+	</h1>
+	<h:form id="miForm">
+		<div style="text-align: center;">
+			<h:commandButton value="Crear Viaje" action="crear_viaje"
+				styleClass="boton" />
+			<br />
+			<br />
+			<h:commandButton value="Consultar Viajes" action="ver_viajes"
+				styleClass="boton" />
+			<br />
+			<br />
+			<h:commandButton value="Mis viajes" action="mis_viajes"
+				styleClass="boton" />
+		</div>
+	</h:form>
 </h:body>
 </html>

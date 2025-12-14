@@ -43,7 +43,6 @@ public interface BLFacade  {
 
 	public Ride createRide( String from, String to, Date date, int nPlaces, float price, String driverEmail) throws RideAlreadyExistException, RideMustBeLaterThanTodayException;
 
-
 	/**
 	 * This method retrieves the rides from two locations on a given date 
 	 * 
@@ -72,6 +71,13 @@ public interface BLFacade  {
 	 */
 	public Driver logIn(String mail, String password) throws IncorrectPasswordException;
 
-
+	/**
+	 * This methods duty is to register a new driver, checking params and if the driver was already signed up
+	 * @param mail
+	 * @param name
+	 * @param password
+	 * @return
+	 */
+	public Driver registerDriver(String mail, String name, String password);
 
 }

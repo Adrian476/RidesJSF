@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Registro</title>
+    <h:outputStylesheet library="css" name="driver.css" />
+</h:head>
+
+<h:body>
+    <h:form id="registerForm">
+        <h1>Registro de nuevo conductor</h1>
+
+        <table>
+            <tr>
+                <td><h:outputLabel for="name" value="Nombre:" /></td>
+                <td>
+                    <h:inputText id="name" value="#{registerBean.name}" required="true" requiredMessage="El nombre es obligatorio">
+                        <f:validateLength minimum="2" maximum="50" />
+                    </h:inputText>
+                </td>
+                <td><h:message for="name" style="color:red" /></td>
+            </tr>
+            <tr>
+                <td><h:outputLabel for="mail" value="Email:" /></td>
+                <td>
+                    <h:inputText id="mail" value="#{registerBean.mail}" required="true" requiredMessage="El email es obligatorio">
+                        <f:validateRegex pattern="^.+@.+\..+$" />
+                    </h:inputText>
+                </td>
+                <td><h:message for="mail" style="color:red" /></td>
+            </tr>
+            <tr>
+                <td><h:outputLabel for="password" value="Contraseña:" /></td>
+                <td>
+                    <h:inputSecret id="password" value="#{registerBean.password}" required="true" requiredMessage="La contraseña es obligatoria"
+                                   redisplay="true">
+                        <f:validateLength minimum="4" maximum ="12" />
+                    </h:inputSecret>
+                </td>
+                <td><h:message for="password" style="color:red" /></td>
+            </tr>
+            <tr>
+                <td><h:outputLabel for="confirmPassword" value="Repite contraseña:" /></td>
+                <td>
+                    <h:inputSecret id="confirmPassword" value="#{registerBean.confirmPassword}" required="true"
+                                   requiredMessage="Debes confirmar la contraseña" redisplay="true" />
+                </td>
+                <td><h:message for="confirmPassword" style="color:red" /></td>
+            </tr>
+        </table>
+
+        <p>
+            <h:commandButton value="Registrarse" action="#{registerBean.register}" />
+            <h:commandButton value="Cerrar" action="cancel" immediate="true" 
+            onclick="if (!confirm('¿Estás seguro?')) return false"/>
+        </p>
+
+        <h:messages id="mensajes" globalOnly="true" style="color:blue; font-weight:bold" />
+        <h:messages style="color:red" />
+    </h:form>
+</h:body>
+</html>

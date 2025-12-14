@@ -5,6 +5,23 @@
 https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 	version="3.0">
 
+	<navigation-rule>
+		<display-name>Index.xhtml</display-name>
+		<from-view-id>/Index.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>log_in</from-outcome>
+			<to-view-id>/Login.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<display-name>Index.xhtml</display-name>
+		<from-view-id>/Index.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sign_up</from-outcome>
+			<to-view-id>/Register.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<navigation-rule>
 		<display-name>Driver.xhtml</display-name>
@@ -69,5 +86,14 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 		</navigation-case>
 	</navigation-rule>
 
+<navigation-rule>
+		<display-name>Register.xhtml</display-name>
+		<from-view-id>/Register.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/Index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
 
 </faces-config>

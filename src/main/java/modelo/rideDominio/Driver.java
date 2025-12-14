@@ -6,24 +6,13 @@ import java.util.Date;
 import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.Id; 
 import jakarta.persistence.*;
-
 import jakarta.persistence.OneToMany;
 
 
 @SuppressWarnings("serial")
 @Entity
-public class Driver implements Serializable {
-
-
-	//private static final long serialVersionUID = 1L;
-
-	@Id
-	private String email;
-	private String name;
-	private String password;
-
+public class Driver extends Usuario  implements Serializable{
 	@OneToMany(mappedBy = "driver",
 			cascade = CascadeType.ALL,
 			orphanRemoval = true,
@@ -32,9 +21,8 @@ public class Driver implements Serializable {
 
 	public Driver() {}
 
-	public Driver(String email, String name) {
-		this.email = email;
-		this.name = name;
+	public Driver(String email, String name, String password) {
+		super(email, name, password);
 	}
 
 	public List<Ride> getRides() {
@@ -45,32 +33,8 @@ public class Driver implements Serializable {
 		this.rides = rides;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public String toString(){
-		return email+";"+name+rides;
+		return super.getEmail()+";"+this.rides;
 	}
 
 	/**
@@ -88,51 +52,4 @@ public class Driver implements Serializable {
 
 		return false;
 	}
-	/**
-
-	 * This method creates a bet with a question, minimum bet ammount and percentual profit
-	 * 
-	 * @param question to be added to the event
-	 * @param betMinimum of that question
-	 * @return Bet
-
-	public Ride addRide(String from, String to, Date date, int nPlaces, float price)  {
-        Ride ride=new Ride(from,to,date,nPlaces,price, this);
-        rides.add(ride);
-        return ride;
-	}
-
-
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Driver other = (Driver) obj;
-		if (email != other.email)
-			return false;
-		return true;
-	}
-
-	public Ride removeRide(String from, String to, Date date) {
-		boolean found=false;
-		int index=0;
-		Ride r=null;
-		while (!found && index<=rides.size()) {
-			r=rides.get(++index);
-			if ( (java.util.Objects.equals(r.getFrom(),from)) && (java.util.Objects.equals(r.getTo(),to)) && (java.util.Objects.equals(r.getDate(),date)) )
-			found=true;
-		}
-
-		if (found) {
-			rides.remove(index);
-			return r;
-		} else return null;
-	}
-	 */
 }
