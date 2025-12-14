@@ -5,9 +5,9 @@ import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import modelo.JPAUtil;
+import modelo.DataAccess.HibernateDataAccess;
 import modelo.rideDominio.Driver;
 import modelo.rideDominio.Ride;
-import modelo.ridePrincipal.HibernateDataAccess;
 import modelo.rideExceptions.*;
 
 /**

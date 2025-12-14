@@ -1,8 +1,9 @@
 package modelo.bean;
 import java.io.Serializable;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.SessionScoped;
 import modelo.rideExceptions.*;
 
 import jakarta.inject.Named;
@@ -11,7 +12,7 @@ import modelo.rideBusinessLogic.BLFacadeImplementation;
 import modelo.rideDominio.Driver;
 
 @Named("login")
-@ApplicationScoped
+@SessionScoped
 public class LoginBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -62,7 +63,11 @@ public class LoginBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Completa todos los campos"));
 			return "ilegal argument";
 		}
-
-
 	}
+	
+	public String logout() {
+	    ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+	    ec.invalidateSession();
+	    return "log_out";
+	} 
 } 
