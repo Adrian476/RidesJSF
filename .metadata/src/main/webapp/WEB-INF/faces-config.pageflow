@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf17654813480920" configfile="/RidesJSF/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="Login.xhtml" x="554" y="178" id="pf17654813942541" referenceLink="//@navigationRule.6/@fromViewId|" outlinks="pf17657389817490" inlinks="pf17654813942552" path="/Login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Hola.xhtml" x="554" y="562" id="pf17654813942553" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" inlinks="pf17654813942554" path="/Hola.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Driver.xhtml" x="338" y="370" id="pf17654813942555" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" outlinks="pf17654813942556 pf17654813942557 pf17654813942552 pf17654813942554" inlinks="pf17654813942558 pf17654813942559 pf17657389817490" path="/Driver.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="CreateRides.xhtml" x="122" y="178" id="pf176548139425610" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf17654813942558" inlinks="pf17654813942556" path="/CreateRides.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="QueryRides.xhtml" x="122" y="562" id="pf176548139425611" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf17654813942559" inlinks="pf17654813942557" path="/QueryRides.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="RidesFrom.xhtml" x="122" y="947" id="pf17655557118941" referenceLink="//@navigationRule.3/@fromViewId|" path="/RidesFrom.xhtml"/>
+  <links id="pf17654813942556" target="pf176548139425610" source="pf17654813942555" outcome="crear_viaje"/>
+  <links id="pf17654813942557" target="pf176548139425611" source="pf17654813942555" outcome="ver_viajes"/>
+  <links id="pf17654813942558" target="pf17654813942555" source="pf176548139425610" outcome="close"/>
+  <links id="pf17654813942559" target="pf17654813942555" source="pf176548139425611" outcome="close"/>
+  <links id="pf17654813942552" target="pf17654813942541" source="pf17654813942555" outcome="login"/>
+  <links id="pf17654813942554" target="pf17654813942553" source="pf17654813942555" outcome="hola"/>
+  <links id="pf17657389817490" target="pf17654813942555" source="pf17654813942541" outcome="ok"/>
+</pageflow:Pageflow>

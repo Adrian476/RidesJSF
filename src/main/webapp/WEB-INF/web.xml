@@ -32,7 +32,7 @@
  
  <!-- Configuración de bienvenida -->
  <welcome-file-list>
- <welcome-file>Driver.xhtml</welcome-file>
+ <welcome-file>Index.xhtml</welcome-file>
  </welcome-file-list>
  
 </web-app>

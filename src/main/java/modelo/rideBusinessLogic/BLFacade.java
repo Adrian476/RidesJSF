@@ -3,27 +3,28 @@ package modelo.rideBusinessLogic;
 import java.util.Date;
 import java.util.List;
 import modelo.rideExceptions.RideMustBeLaterThanTodayException;
+import modelo.rideExceptions.IncorrectPasswordException;
 import modelo.rideExceptions.RideAlreadyExistException;
 import modelo.rideDominio.*;
- 
+
 /**
  * Interface that specifies the business logic.
  */
 public interface BLFacade  {
-	  
+
 	/**
 	 * This method returns all the cities where rides depart 
 	 * @return collection of cities
 	 */
 	public List<String> getDepartCities();
-	
+
 	/**
 	 * This method returns all the arrival destinations, from all rides that depart from a given city  
 	 * 
 	 * @param from the depart location of a ride
 	 * @return all the arrival destinations
 	 */
-	 public List<String> getDestinationCities(String from);
+	public List<String> getDestinationCities(String from);
 
 
 	/**
@@ -37,12 +38,12 @@ public interface BLFacade  {
 	 * 
 	 * @return the created ride, or null, or an exception
 	 * @throws RideMustBeLaterThanTodayException if the ride date is before today 
- 	 * @throws RideAlreadyExistException if the same ride already exists for the driver
+	 * @throws RideAlreadyExistException if the same ride already exists for the driver
 	 */
-   
-   public Ride createRide( String from, String to, Date date, int nPlaces, float price, String driverEmail) throws RideAlreadyExistException, RideMustBeLaterThanTodayException;
-	
-	
+
+	public Ride createRide( String from, String to, Date date, int nPlaces, float price, String driverEmail) throws RideAlreadyExistException, RideMustBeLaterThanTodayException;
+
+
 	/**
 	 * This method retrieves the rides from two locations on a given date 
 	 * 
@@ -51,8 +52,8 @@ public interface BLFacade  {
 	 * @param date the date of the ride 
 	 * @return collection of rides
 	 */
-	 public List<Ride> getRides(String from, String to, Date date);
-	
+	public List<Ride> getRides(String from, String to, Date date);
+
 	/**
 	 * This method retrieves from the database the dates a month for which there are events
 	 * @param from the origin location of a ride
@@ -60,8 +61,17 @@ public interface BLFacade  {
 	 * @param date of the month for which days with rides want to be retrieved 
 	 * @return collection of rides
 	 */
-	 public List<Date> getThisMonthDatesWithRides(String from, String to, Date date);
+	public List<Date> getThisMonthDatesWithRides(String from, String to, Date date);
+
+	/**
+	 * This method checks if the password belongs to the mail
+	 * @param mail
+	 * @param password
+	 * @throws IncorrectPasswordException if the password is incorrect
+	 * @return the driver
+	 */
+	public Driver logIn(String mail, String password) throws IncorrectPasswordException;
 
 
-	
+
 }

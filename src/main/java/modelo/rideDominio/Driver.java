@@ -15,27 +15,28 @@ import jakarta.persistence.OneToMany;
 @SuppressWarnings("serial")
 @Entity
 public class Driver implements Serializable {
-	
+
 
 	//private static final long serialVersionUID = 1L;
 
 	@Id
-    private String email;
-    private String name;
+	private String email;
+	private String name;
+	private String password;
 
-    @OneToMany(mappedBy = "driver",
-               cascade = CascadeType.ALL,
-               orphanRemoval = true,
-               fetch = FetchType.EAGER)
-    private List<Ride> rides = new ArrayList<>();
-    
-    public Driver() {}
-    
-    public Driver(String email, String name) {
-        this.email = email;
-        this.name = name;
-    }
-    
+	@OneToMany(mappedBy = "driver",
+			cascade = CascadeType.ALL,
+			orphanRemoval = true,
+			fetch = FetchType.EAGER)
+	private List<Ride> rides = new ArrayList<>();
+
+	public Driver() {}
+
+	public Driver(String email, String name) {
+		this.email = email;
+		this.name = name;
+	}
+
 	public List<Ride> getRides() {
 		return rides;
 	}
@@ -43,7 +44,7 @@ public class Driver implements Serializable {
 	public void setRides(List<Ride> rides) {
 		this.rides = rides;
 	}
-		
+
 	public String getEmail() {
 		return email;
 	}
@@ -60,10 +61,18 @@ public class Driver implements Serializable {
 		this.name = name;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String toString(){
 		return email+";"+name+rides;
 	}
-	
+
 	/**
 	 * This method checks if the ride already exists for that driver
 	 * 
@@ -75,27 +84,27 @@ public class Driver implements Serializable {
 	public boolean doesRideExists(String from, String to, Date date)  {	
 		for (Ride r:rides)
 			if ( (java.util.Objects.equals(r.getFrom(),from)) && (java.util.Objects.equals(r.getTo(),to)) && (java.util.Objects.equals(r.getDate(),date)) )
-			 return true;
-		
+				return true;
+
 		return false;
 	}
 	/**
-	   
+
 	 * This method creates a bet with a question, minimum bet ammount and percentual profit
 	 * 
 	 * @param question to be added to the event
 	 * @param betMinimum of that question
 	 * @return Bet
-	 
+
 	public Ride addRide(String from, String to, Date date, int nPlaces, float price)  {
         Ride ride=new Ride(from,to,date,nPlaces,price, this);
         rides.add(ride);
         return ride;
 	}
 
-	
-	
-		
+
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -119,7 +128,7 @@ public class Driver implements Serializable {
 			if ( (java.util.Objects.equals(r.getFrom(),from)) && (java.util.Objects.equals(r.getTo(),to)) && (java.util.Objects.equals(r.getDate(),date)) )
 			found=true;
 		}
-			
+
 		if (found) {
 			rides.remove(index);
 			return r;

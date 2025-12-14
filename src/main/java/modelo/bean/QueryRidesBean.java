@@ -89,6 +89,7 @@ public class QueryRidesBean implements Serializable{
     	return selectedDepart; 
     }
     public void setSelectedDepart(String s) { 
+    	System.out.println("From "+ s);
     	this.selectedDepart = s; 
     }
 

@@ -10,6 +10,7 @@ import modelo.JPAUtil;
 import jakarta.persistence.*;
 import modelo.rideDominio.Driver;
 import modelo.rideDominio.Ride;
+import modelo.rideExceptions.IncorrectPasswordException;
 import modelo.rideExceptions.RideAlreadyExistException;
 import modelo.rideExceptions.RideMustBeLaterThanTodayException;
 public class HibernateDataAccess {
@@ -27,9 +28,9 @@ public class HibernateDataAccess {
 		List<String> cities = query.getResultList();
 		System.out.println(cities.toString());
 		return cities;
-		
+
 	}
-	
+
 	public List<String> getArrivalCities(String from){
 		EntityManager em = JPAUtil.getEntityManager(); 
 		System.out.println("=> getDepartCities from "+ from);
@@ -38,7 +39,7 @@ public class HibernateDataAccess {
 		List<String> arrivingCities = query.getResultList(); 
 		System.out.println(arrivingCities.toString());
 		return arrivingCities;
-		
+
 	}
 
 	/**
@@ -52,7 +53,7 @@ public class HibernateDataAccess {
 	 * 
 	 * @return the created ride, or null, or an exception
 	 * @throws RideMustBeLaterThanTodayException if the ride date is before today 
- 	 * @throws RideAlreadyExistException if the same ride already exists for the driver
+	 * @throws RideAlreadyExistException if the same ride already exists for the driver
 	 */
 	public Ride createRide(String from, String to, Date date, int nPlaces, float price, String driverEmail) throws  RideAlreadyExistException, RideMustBeLaterThanTodayException {
 		System.out.println(">> DataAccess: createRide=> from= "+from+" to= "+to+" driver="+driverEmail+" date "+date);
@@ -62,7 +63,7 @@ public class HibernateDataAccess {
 			if(new Date().compareTo(date)>0) {
 				throw new RideMustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
 			}
-			
+
 			em.getTransaction().begin();
 			Driver driver = em.find(Driver.class, driverEmail);
 			if (driver.doesRideExists(from, to, date)) {
@@ -71,16 +72,16 @@ public class HibernateDataAccess {
 			}
 			//next instruction can be obviated
 			ride = new Ride(from, to, date, nPlaces, price, driver);
-	        driver.getRides().add(ride);
+			driver.getRides().add(ride);
 			em.persist(driver); 
 			em.getTransaction().commit();
-			
+
 			System.out.println("Ride successfully created and persisted to the DB =>  from= "+ride.getFrom() +" to= "+ride.getTo()+" driver ="+ride.getDriver().getEmail()+" date =  "+ride.getDate());
 			return ride;
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			em.getTransaction().commit();
-			
+
 
 			return null;
 		}
@@ -103,13 +104,13 @@ public class HibernateDataAccess {
 		query.setParameter(2, to);
 		query.setParameter(3, date);
 		List<Ride> rides = query.getResultList();
-	 	 for (Ride ride:rides){
-		   res.add(ride);
-		  }
-	 	 System.out.println("Retrieved rides from the DB => " + res.toString());
-	 	return res;
+		for (Ride ride:rides){
+			res.add(ride);
+		}
+		System.out.println("Retrieved rides from the DB => " + res.toString());
+		return res;
 	}
-	
+
 	/**
 	 * This method retrieves from the database the dates a month for which there are events
 	 * @param from the origin location of a ride
@@ -121,56 +122,70 @@ public class HibernateDataAccess {
 		System.out.println(">> DataAccess: getEventsMonth");
 		EntityManager em = JPAUtil.getEntityManager(); 
 		List<Date> res = new ArrayList<Date>();	
-		
+
 		Date firstDayMonthDate= UtilDate.firstDayMonth(date);
 		Date lastDayMonthDate= UtilDate.lastDayMonth(date);
-				
-		
+
+
 		TypedQuery<Date> query = em.createQuery("SELECT DISTINCT r.date FROM Ride r WHERE r.from=?1 AND r.to=?2 AND r.date BETWEEN ?3 and ?4",Date.class);   
-		
+
 		query.setParameter(1, from);
 		query.setParameter(2, to);
 		query.setParameter(3, firstDayMonthDate);
 		query.setParameter(4, lastDayMonthDate);
 		List<Date> dates = query.getResultList();
-	 	 for (Date d:dates){
-		   res.add(d);
-		  }
-	 	return res;
+		for (Date d:dates){
+			res.add(d);
+		}
+		return res;
 	}
-	
+
+	public Driver logIn(String mail, String password) throws IncorrectPasswordException {
+		System.out.println("HibernateDataAccess logIn => mail: " + mail);
+		if (mail == null || mail.trim().isEmpty() || password == null || password.isEmpty()) { //JSF ya lo comprueba igualmente
+			throw new IllegalArgumentException("Email y contraseña son obligatorios");
+		}
+		EntityManager em = JPAUtil.getEntityManager();
+		Driver driver = em.find(Driver.class, mail);
+		if (driver == null) return null;
+		if (!driver.getPassword().equals(password)) throw new IncorrectPasswordException("Contraseña no válida");
+		return driver;
+	}
+
 	public void initializeDB() {
-	    EntityManager em = JPAUtil.getEntityManager();
-	    try {
-	        em.getTransaction().begin();
+		EntityManager em = JPAUtil.getEntityManager();
+		try {
+			em.getTransaction().begin();
 
-	        // Crea un driver de prueba si no existe
-	        Driver driver = em.find(Driver.class, "DriverTestJSF");
-	        if (driver == null) {
-	            driver = new Driver("DriverTestJSF", "Test Driver");
-	        }
-	        Date fecha = UtilDate.newDate(2025, 11, 25);
-	        // Crea un ride de prueba
-	        Ride ride = new Ride("Bilbao", "Madrid", fecha, 4, 25.5f, driver);
-	        Ride ride2 = new Ride("Getxo", "Portugalete", fecha, 4, 25.5f, driver);
-	        Ride ride3 = new Ride("Bilbao", "Donostia", fecha, 4, 25.5f, driver);
-	        driver.getRides().add(ride);
-	        driver.getRides().add(ride2);
-	        driver.getRides().add(ride3);
-	        em.persist(driver);
-	        // o em.persist(ride); dependiendo de tu cascade
+			// Crea un driver de prueba si no existe
+			Driver driver = em.find(Driver.class, "DriverTestJSF");
+			if (driver == null) {
+				driver = new Driver("DriverTestJSF", "Test Driver");
+			}
+			Date fecha = UtilDate.newDate(2025, 11, 25);
+			// Crea un ride de prueba
+			Ride ride = new Ride("Bilbao", "Madrid", fecha, 4, 25.5f, driver);
+			Ride ride2 = new Ride("Getxo", "Portugalete", fecha, 4, 25.5f, driver);
+			Ride ride3 = new Ride("Bilbao", "Donostia", fecha, 4, 25.5f, driver);
+			driver.getRides().add(ride);
+			driver.getRides().add(ride2);
+			driver.getRides().add(ride3);
+			em.persist(driver);
+			// o em.persist(ride); dependiendo de tu cascade
 
-	        em.getTransaction().commit();
-	        System.out.println("Base de datos inicializada con datos de prueba");
-	    } catch (Exception e) {
-	        if (em.getTransaction().isActive()) {
-	            em.getTransaction().rollback();
-	        }
-	        e.printStackTrace();
-	        // No lanzar excepción → no romper la app por datos de prueba
-	    } finally {
-	        em.close();
-	    }
+			em.getTransaction().commit();
+			System.out.println("Base de datos inicializada con datos de prueba");
+		} catch (Exception e) {
+			if (em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
+			e.printStackTrace();
+			// No lanzar excepción → no romper la app por datos de prueba
+		} finally {
+			em.close();
+		}
 	}
+
+
 
 }

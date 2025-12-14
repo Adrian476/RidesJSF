@@ -6,18 +6,20 @@
  xmlns:f="http://xmlns.jcp.org/jsf/core"
  xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Driver</title>
+	<title>Rides</title>
 	<h:outputStylesheet library="css" name="driver.css" />	
 </h:head>
 <h:body>
 <h:form id="miForm">
 <h3 style="text-align:center; margin-bottom:30px;">
-    Por favor, seleccione qué desea hacer:
+    Rides
 </h3>
-
+<div>
+     <h:graphicImage name="car.webp" library="images" alt="Bienvenida" />
+</div>
 <div style="text-align:center;">
-    <h:commandButton value="Crear Viaje" action="crear_viaje" styleClass="boton"/><br/><br/>
-    <h:commandButton value="Consultar Viajes" action="ver_viajes" styleClass="boton"/><br/><br/>
+    <h:commandButton value="Iniciar Sesión" action="log_in" styleClass="boton"/><br/><br/>
+    <h:commandButton value="Registro" action="sign_up" styleClass="boton"/>
 </div>
 </h:form>
 </h:body>

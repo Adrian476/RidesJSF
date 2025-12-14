@@ -1,15 +1,38 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
- xmlns:h="http://xmlns.jcp.org/jsf/html"
- xmlns:f="http://xmlns.jcp.org/jsf/core"
- xmlns:p="http://primefaces.org/ui"
- xmlns:ui="http://java.sun.com/jsf/facelets">
- 
-<ui:composition template="/WEB-INF/facelets/templates/Plantilla.xhtml">
-	<ui:define name="titulo">Haz Login</ui:define>
-	<ui:define name="cuerpo">
- 		<ui:include src="LoginComponente.xhtml"/>
-	</ui:define>
-</ui:composition>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Login</title>
+	<h:outputStylesheet library="css" name="driver.css" />
+</h:head>
+<h:body>
+	<h:form id="miForm">
+		<table>
+			<tr>
+				<td>Email:</td>
+				<td><h:inputText id="mail" value="#{login.mail}">
+						<f:validateRegex pattern="^.+@.+\..+$" />
+					</h:inputText></td>
+				<td><h:message for="mail" style="color:red" /></td>
+			</tr>
+			<tr>
+				<td>Contraseña:</td>
+				<td><h:inputSecret id="pass" redisplay="true"
+						value="#{login.password}">
+						<f:validateLongRange minimum="1" maximum="12" />
+						<f:ajax execute="pass" render="mensajes" />
+					</h:inputSecret></td>
+				<td><h:message for="pass" style="color:red" /></td>
+			</tr>
+		</table>
+		<p>
+			<h:commandButton value="Aceptar" action="#{login.logIn}" />
+		</p>
+		<h:messages id="mensajes" style="color:blue" />
+	</h:form>
+</h:body>
 </html>
