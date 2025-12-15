@@ -85,6 +85,15 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 			<to-view-id>/Driver.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>Login.xhtml</display-name>
+		<from-view-id>/Login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/Index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 <navigation-rule>
 		<display-name>Register.xhtml</display-name>
@@ -101,6 +110,15 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 		<navigation-case>
 			<from-outcome>back</from-outcome>
 			<to-view-id>/Driver.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>Driver.xhtml</display-name>
+		<from-view-id>/Driver.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>mis_viajes</from-outcome>
+			<to-view-id>/MyRides.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	

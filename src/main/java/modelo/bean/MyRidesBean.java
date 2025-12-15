@@ -7,6 +7,8 @@ import java.util.List;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import jakarta.inject.Inject;
+import modelo.rideBusinessLogic.BLFacade;
+import modelo.rideBusinessLogic.BLFacadeImplementation;
 import modelo.rideDominio.Driver;
 import modelo.rideDominio.Ride;
 
@@ -19,26 +21,30 @@ public class MyRidesBean implements Serializable {
     private LoginBean loginBean; 
 
     private List<Ride> myRides = Collections.emptyList();
+    BLFacade facade;
 
-    public MyRidesBean() {}
-
-    public void loadMyRides() {
-        Driver driver = loginBean.getUser();
-        if (driver != null) {
-            myRides = driver.getRides();
-        } else {
-            myRides = Collections.emptyList();
-        }
+    public MyRidesBean() {
+    	facade = new BLFacadeImplementation();
     }
 
     public List<Ride> getMyRides() {
-        if (myRides.isEmpty()) {
-            loadMyRides();
+    	Driver loggedUser = loginBean.getUser();
+        if (loggedUser != null) {
+            Driver d = facade.getDriverByEmail(loggedUser.getEmail());
+            if (d != null) {
+                myRides = d.getRides();
+            } else {
+                myRides = Collections.emptyList();
+            }
+        } else {
+            myRides = Collections.emptyList();
         }
         return myRides;
     }
 
+  
+
     public void refresh() {
-        loadMyRides();
+    	myRides = Collections.emptyList();
     }
 }

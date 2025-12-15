@@ -106,6 +106,13 @@ public class BLFacadeImplementation  implements BLFacade {
 	    return dbManager.registerDriver(mail, name, password);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public Driver getDriverByEmail(String email) {
+		return dbManager.getDriverByEmail(email);
+	}
+
 
 
 }

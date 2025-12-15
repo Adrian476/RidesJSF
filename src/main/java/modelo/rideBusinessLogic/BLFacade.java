@@ -79,5 +79,7 @@ public interface BLFacade  {
 	 * @return
 	 */
 	public Driver registerDriver(String mail, String name, String password);
+	
+	public Driver getDriverByEmail(String email);
 
 }

@@ -5,6 +5,7 @@ import modelo.rideBusinessLogic.*;
 
 import modelo.rideDominio.Ride;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 @SuppressWarnings("serial")
@@ -17,11 +18,11 @@ public class CreateRidesBean implements Serializable{
 	private Date date; 
 	private String seats;
 	private String price;
-	private String driverEmail = "DriverTestJSF";
 	private String message;
 
 
-
+	@Inject
+    private LoginBean loginBean;
 	private BLFacade facade;
 
 	public CreateRidesBean() {
@@ -31,7 +32,7 @@ public class CreateRidesBean implements Serializable{
 	public String createRides() {
 		try {
 
-			Ride r = facade.createRide(fromCity, toCity, date, Integer.parseInt(seats.trim()), Float.parseFloat(price.trim()), driverEmail);
+			Ride r = facade.createRide(fromCity, toCity, date, Integer.parseInt(seats.trim()), Float.parseFloat(price.trim()), loginBean.getMail());
 			if (r != null) {
 				message = "Ride creado correctamente.";
 			} else {
@@ -92,14 +93,6 @@ public class CreateRidesBean implements Serializable{
 
 	public void setPrice(String price) { 
 		this.price = price; 
-	}
-
-	public String getDriverEmail() {
-		return driverEmail;
-	}
-
-	public void setDriverEmail(String driverEmail) {
-		this.driverEmail = driverEmail;
 	}
 
 }

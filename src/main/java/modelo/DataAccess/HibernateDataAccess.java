@@ -178,40 +178,80 @@ public class HibernateDataAccess {
 	    }
 	}
 
-	public void initializeDB() {
-		EntityManager em = JPAUtil.getEntityManager();
-		try {
-			em.getTransaction().begin();
-
-			// Crea un driver de prueba si no existe
-			Driver driver = em.find(Driver.class, "DriverTestJSF");
-			if (driver == null) {
-				driver = new Driver("driver@test.com", "Test Driver", "test123");
-			}
-			Date fecha = UtilDate.newDate(2025, 11, 25);
-			// Crea un ride de prueba
-			Ride ride = new Ride("Bilbao", "Madrid", fecha, 4, 25.5f, driver);
-			Ride ride2 = new Ride("Getxo", "Portugalete", fecha, 4, 25.5f, driver);
-			Ride ride3 = new Ride("Bilbao", "Donostia", fecha, 4, 25.5f, driver);
-			driver.getRides().add(ride);
-			driver.getRides().add(ride2);
-			driver.getRides().add(ride3);
-			em.persist(driver);
-			// o em.persist(ride); dependiendo de tu cascade
-
-			em.getTransaction().commit();
-			System.out.println("Base de datos inicializada con datos de prueba");
-		} catch (Exception e) {
-			if (em.getTransaction().isActive()) {
-				em.getTransaction().rollback();
-			}
-			e.printStackTrace();
-			// No lanzar excepción → no romper la app por datos de prueba
-		} finally {
-			em.close();
-		}
+	public Driver getDriverByEmail(String email) {
+	    EntityManager em = JPAUtil.getEntityManager();
+	    return em.find(Driver.class, email);
 	}
 
+	public void initializeDB() {
+	    EntityManager em = JPAUtil.getEntityManager();
+	    try {
+	        em.getTransaction().begin();
+
+	        Driver driver1 = em.find(Driver.class, "driver@test.com");
+	        if (driver1 == null) {
+	            driver1 = new Driver("driver@test.com", "Test Driver", "test123");
+	        }
+
+	        Driver driver2 = em.find(Driver.class, "ana@test.com");
+	        if (driver2 == null) {
+	            driver2 = new Driver("ana@test.com", "Ana García", "test123");
+	        }
+
+	        Driver driver3 = em.find(Driver.class, "jose@test.com");
+	        if (driver3 == null) {
+	            driver3 = new Driver("jose@test.com", "José López", "test123");
+	        }
+
+	        Date fecha = UtilDate.newDate(2025, 11, 25);
+
+	        Ride ride1 = new Ride("Bilbao", "Madrid", fecha, 4, 25.5f, driver1);
+	        Ride ride2 = new Ride("Getxo", "Portugalete", fecha, 4, 25.5f, driver1);
+	        Ride ride3 = new Ride("Bilbao", "Donostia", fecha, 4, 25.5f, driver1);
+	        Ride ride4 = new Ride("Bilbao", "Vitoria", fecha, 5, 20.0f, driver1);
+	        Ride ride5 = new Ride("Donostia", "Irun", fecha, 3, 15.0f, driver1);
+
+	        driver1.getRides().add(ride1);
+	        driver1.getRides().add(ride2);
+	        driver1.getRides().add(ride3);
+	        driver1.getRides().add(ride4);
+	        driver1.getRides().add(ride5);
+
+	        Ride ride6 = new Ride("Madrid", "Barcelona", fecha, 4, 45.0f, driver2);
+	        Ride ride7 = new Ride("Barcelona", "Valencia", fecha, 3, 35.0f, driver2);
+	        Ride ride8 = new Ride("Madrid", "Sevilla", fecha, 6, 55.0f, driver2);
+	        Ride ride9 = new Ride("Valencia", "Alicante", fecha, 2, 18.0f, driver2);
+
+	        driver2.getRides().add(ride6);
+	        driver2.getRides().add(ride7);
+	        driver2.getRides().add(ride8);
+	        driver2.getRides().add(ride9);
+
+	        Ride ride10 = new Ride("Barcelona", "Bilbao", fecha, 5, 60.0f, driver3);
+	        Ride ride11 = new Ride("Vitoria", "Logroño", fecha, 4, 22.0f, driver3);
+	        Ride ride12 = new Ride("Pamplona", "Zaragoza", fecha, 3, 28.0f, driver3);
+	        Ride ride13 = new Ride("Zaragoza", "Madrid", fecha, 4, 40.0f, driver3);
+
+	        driver3.getRides().add(ride10);
+	        driver3.getRides().add(ride11);
+	        driver3.getRides().add(ride12);
+	        driver3.getRides().add(ride13);
+
+	        em.persist(driver1);
+	        em.persist(driver2);
+	        em.persist(driver3);
+
+	        em.getTransaction().commit();
+	        System.out.println("Base de datos inicializada con datos de prueba");
+	    } catch (Exception e) {
+	        if (em.getTransaction().isActive()) {
+	            em.getTransaction().rollback();
+	        }
+	        e.printStackTrace();
+	    } finally {
+	        em.close();
+	    }
+	}
 
 
 }
